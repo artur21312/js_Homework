@@ -11,6 +11,6 @@ alert(greeting);
 let numericage;
 numericage = Number(age);
 let nextAge = 1 + numericage;
-console.log(nextAge)
-const isAdult = 18 <=age
+console.log(nextAge);
+const isAdult = 18 <=age;
 console.log(isAdult);
