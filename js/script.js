@@ -1,5 +1,6 @@
 'use strict';
-let name, admin;
+let name;
+let admin;
 name = 'john';
 admin = name;
 alert(admin);
