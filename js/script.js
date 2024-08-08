@@ -1,13 +1,5 @@
 'use strict';
-let name;
-let admin;
-name = 'john';
-admin = name;
-alert(admin);
-
-let planet;
-let user;
-
-let colors = "10" + 10;
-console.log(colors);
-console.log(typeof colors);
+const time = prompt('вкажіть кількість год' )
+let minute = time *60;
+let seconds = minute * 60;
+alert('кількість секунд' + seconds );
