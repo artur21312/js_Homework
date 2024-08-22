@@ -10,6 +10,7 @@ for (let namber=10 ;namber<=100;namber+=10){
     console.log(namber+' доларив '+grivna+' гривень ');
 }
 
+
 const name= prompt('ведитьчисло n')
 for (let namber=1 ;namber<=100;namber++){
     if (namber>=name){
