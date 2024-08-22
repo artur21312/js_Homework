@@ -8,6 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src/js/script.js",
     "test": "test"
   },
   "repository": {
