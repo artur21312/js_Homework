@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "prettier": "^3.3.3"
+  },
+  "name": "hvr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artur21312/js_Homework.git"
+  },
+  "keywords": [
+    "hello"
+  ],
+  "author": "artur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artur21312/js_Homework/issues"
+  },
+  "homepage": "https://github.com/artur21312/js_Homework#readme",
+  "devDependencies": {
+    "eslint": "^9.9.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "typescript-eslint": "^8.1.0"
+  }
+}
