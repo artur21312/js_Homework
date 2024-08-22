@@ -1,20 +1,33 @@
 'use strict';
 
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+
+const namber=4//prompt('ведіть число');
+const text ='gdffd'//prompt('ведіть тект');
+const sem ='*'//prompt('ведить символ');
+const bul =prompt('ведіть буліан');
+//const concol=namber !== null&& !!namber.trim && !isNaN(namber);
+let sum = "";
 
 
-const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-const length=prompt('ведите число');
-let sum ='';
-const generateKey =  function () {
-    for (let i = 1; i <= length; i++){
-    sum  += characters[getRandomInt(0,characters.length)];
+
+
+const lopi =function (){
+if (namber<text.length||bul===false){
+    for (let i=namber; i<text.length; i++){
+        sum += sem;
     }
+    sum+=text;
     console.log(sum);
-}
-console.log(generateKey());
+} else{
+    let lop='';
+    for (let i=text.length; i<namber; i++){
+        lop += sem;
+
+    }
+    sum +=text+lop;
+    console.log(sum );
+
+}}
+
+console.log(lopi());
