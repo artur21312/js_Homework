@@ -3,14 +3,26 @@
 
 
 const namber=4//prompt('ведіть число');
-const text ='gdffd'//prompt('ведіть тект');
-const sem ='*'//prompt('ведить символ');
+const text =prompt('ведіть тект');
+const sem =prompt('ведить символ');
 const bul =prompt('ведіть буліан');
-//const concol=namber !== null&& !!namber.trim && !isNaN(namber);
 let sum = "";
 
 
-
+const per=function (){
+    if (typeof text !== 'string') {
+        return 'Error: string is missing or not a string';
+    }
+    if (typeof namber !== 'number') {
+        return 'Error: length is missing or not a number';
+    }
+    if (typeof sem !== 'string' || sem.length !== 1) {
+        return 'Error: char is missing or not a single character';
+    }
+    if (typeof bul !== 'boolean') {
+        return 'Error: left is missing or not a boolean';
+    }
+}
 
 const lopi =function (){
 if (namber<text.length||bul===false){
@@ -29,5 +41,5 @@ if (namber<text.length||bul===false){
     console.log(sum );
 
 }}
-
+console.log(per());
 console.log(lopi());
