@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "lodash": "^4.17.21",
     "prettier": "^3.3.3"
   },
