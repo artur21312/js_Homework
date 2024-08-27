@@ -2,7 +2,7 @@
 
 
 
-const namber=4//prompt('ведіть число');
+const namber=prompt('ведіть число');
 const text =prompt('ведіть тект');
 const sem =prompt('ведить символ');
 const bul =prompt('ведіть буліан');
