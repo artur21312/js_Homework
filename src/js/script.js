@@ -15,6 +15,7 @@ const old=function (){
 
     console.log(masnn);
 }
+
 console.log(old());
 
 const x=+prompt('введите число X');
