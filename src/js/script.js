@@ -1,97 +1,38 @@
 'use strict';
 
-const  mas=[32,'babl',43,12,false,53,'prit'];
 
-const old=function (){
-    let sum=0;
-    let sum_nam=0;
-    for(let i=0;i<mas.length;i++){
-        if(typeof mas[i]==='number'){
-            sum_nam++;
-            sum+=mas[i];
-        }
-    }
-    let masnn=sum/sum_nam;
+const mainFunction=function (callback) {
+    let nam1 = +prompt();
+    let nam2 = +prompt();
 
-    console.log(masnn);
+    callback (nam1, nam2);
 }
-
-console.log(old());
-
-const x=+prompt('введите число X');
-const y=+prompt('введите число Y');
-const znake=prompt('введите знак');
-const doMath=function (x, znak, y){
-    let sum=x;
-    switch (znak) {
-        case '+':
-            sum += y;
-            break;
-        case '-':
-            sum = x - y;
-            break;
-        case '*':
-            sum = x * y;
-            break;
-        case '/':
-            sum = x / y;
-            break;
-        case '%':
-            sum = x % y;
-            break;
-        case '^':
-            sum = x;
-            for (let i = 1; i < y; i++) {
-                sum *= sum;
-            }
-            break;
-        default:
-            console.log('Некорректный знак операции');
+const exponentiation =function(nam1,nam2) {
+    let answer=nam1;
+    for(let i=1;i<nam2;i++){
+    answer*=answer;
     }
 
-    console.log(sum);
-}
-console.log(doMath(x,znake,y));
+    return alert(answer);
 
-
-const fill2DArray=function () {
-
-    const rows = parseInt(prompt("Введіть кількість рядків (довжина основного масиву):"), 10);
-
-
-    const array = [];
-
-
-    for (let i = 0; i < rows; i++) {
-
-        const cols = parseInt(prompt(`Введіть кількість елементів у рядку ${i + 1}:`), 10);
-
-        const innerArray = [];
-
-        for (let j = 0; j < cols; j++) {
-            const value = prompt(`Введіть значення для елементу [${i + 1}][${j + 1}]:`);
-            innerArray.push(value);
-        }
-
-        array.push(innerArray);
-    }
-
-    return array;
 }
 
-console.log(fill2DArray());
-
-
-const inputString = prompt("Введіть рядок:");
-const chars = prompt("Введіть символи для видалення :").split('');
-
-function removeCharacters(str, charsToRemove) {
-    for (let char of charsToRemove) {
-        str = str.split(char).join('');
-    }
-    return str;
+const multiplay=function(num1,num2){
+    let answer=num1*num2;
+    return answer;
 }
 
+const division=function(num1,num2){
+    let answer=num1/num2;
+    return answer;
+}
 
-const result = removeCharacters(inputString, chars);
-console.log(result);
+const modulo=function(num1,num2){
+    let answer=num1%num2;
+    return answer;
+}
+
+console.log(mainFunction(exponentiation));
+console.log(mainFunction(multiplay));
+console.log(mainFunction(division));
+console.log(mainFunction(modulo));
