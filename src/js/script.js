@@ -4,14 +4,14 @@ const  mas=[32,'babl',43,12,false,53,'prit'];
 
 const old=function (){
     let sum=0;
-    let masn=0;
+    let sum_nam=0;
     for(let i=0;i<mas.length;i++){
         if(typeof mas[i]==='number'){
-            masn++;
+            sum_nam++;
             sum+=mas[i];
         }
     }
-    let masnn=sum/masn;
+    let masnn=sum/sum_nam;
 
     console.log(masnn);
 }
