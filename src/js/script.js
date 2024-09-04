@@ -58,6 +58,7 @@ const mas_max=(mas)=>{
     }
     console.log(mas);
 }
+
 console.log(mas_max(mas));
 
 
