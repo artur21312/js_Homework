@@ -1,6 +1,6 @@
 'use strict';
 
-let masiv=(callback)=>{
+const masiv=(callback)=>{
     let mas=[];
     for(;true;){
             let primitiv=prompt('ведите значение ');
@@ -9,7 +9,7 @@ let masiv=(callback)=>{
     }
     callback(mas);
 }
-let sort =(mas)=>{
+const sort =(mas)=>{
 console.log(mas);
 mas.sort((a,b)=> a-b);
 console.log(mas);
