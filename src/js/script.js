@@ -2,8 +2,8 @@
 
 
 const mainFunction=function (callback) {
-    let nam1 = +prompt();
-    let nam2 = +prompt();
+    const nam1 = +prompt();
+    const nam2 = +prompt();
 
     callback (nam1, nam2);
 }
@@ -18,17 +18,17 @@ const exponentiation =function(nam1,nam2) {
 }
 
 const multiplay=function(num1,num2){
-    let answer=num1*num2;
+    const answer=num1*num2;
     return answer;
 }
 
 const division=function(num1,num2){
-    let answer=num1/num2;
+    const answer=num1/num2;
     return answer;
 }
 
 const modulo=function(num1,num2){
-    let answer=num1%num2;
+    const answer=num1%num2;
     return answer;
 }
 
