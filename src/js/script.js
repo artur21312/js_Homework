@@ -77,5 +77,6 @@ const suma=(users)=>{
 }
 
 
+
 console.log(suma(users));
 console.log(balans);
