@@ -1,7 +1,7 @@
 'use strict';
 
 
-let users = [
+const users = [
     {
         "index": 0,
         "isActive": true,
