@@ -59,6 +59,7 @@ const users = [
 ]
 
 
+
 const filtr=(balanse)=>{
     return parseFloat(balanse.replace(/[$,]/g, ''));
 }
