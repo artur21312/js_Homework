@@ -69,9 +69,7 @@ const balans =users
 const suma=(users)=>{
     let sum=0;
     for(let i=0;i<users.length;i++){
-        if (filtr(users[i].balance)>2000){
         sum+=filtr(users[i].balance);
-        }
     }
     return sum;
 }
