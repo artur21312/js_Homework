@@ -1,12 +1,29 @@
 'use strict';
 
-const  user ={
-    name:'alex',
-        age:25,
-    funk:function () {
-        console.log('hello '+this.name );
-
+let num=+prompt('ведіть число');
+let degree=prompt('ведіть ступінь');
+const getFaktariall=(number)=>{
+    if(number===1){
+        return 1;
     }
+    return number*=getFaktariall(number-1);
 }
+num=getFaktariall(num);
+console.log(`число ${num}`);
+const pov=(num,degree)=> {
+ if(degree===0) return 1;
+    return num*pov(num,degree-1);
+}
+console.log(pov(num,degree));
 
-user.funk(user);
+let a=+prompt('ведить число а');
+let b=+prompt('ведить число б');
+
+const rek=(a,b)=>{
+    if(b===0){
+        return a;
+    }
+    a++;
+    return  rek(a,b-1);
+}
+console.log(rek(a,b));
