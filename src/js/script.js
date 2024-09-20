@@ -1,29 +1,27 @@
 'use strict';
 
-let num=+prompt('ведіть число');
-let degree=prompt('ведіть ступінь');
-const getFaktariall=(number)=>{
-    if(number===1){
+function getFactorial(n) {
+    if (n === 0 || n === 1) {
         return 1;
     }
-    return number*=getFaktariall(number-1);
+    return n * getFactorial(n - 1);
 }
-num=getFaktariall(num);
-console.log(`число ${num}`);
-const pov=(num,degree)=> {
- if(degree===0) return 1;
-    return num*pov(num,degree-1);
+console.log(getFactorial(6));
+
+function pow(num, degree) {
+    if (degree === 0) {
+        return 1;
+    }
+    return num * pow(num, degree - 1);
 }
-console.log(pov(num,degree));
+console.log(pow(8, 5));
 
-let a=+prompt('ведить число а');
-let b=+prompt('ведить число б');
-
-const rek=(a,b)=>{
-    if(b===0){
+function recursiveSum(a, b) {
+    if (b === 0) {
         return a;
     }
-    a++;
-    return  rek(a,b-1);
+    return recursiveSum(a + 1, b - 1);
 }
-console.log(rek(a,b));
+let a = 9;
+let b = 4;
+console.log(recursiveSum(a, b));
