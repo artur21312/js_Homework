@@ -1,33 +1,21 @@
 'use strict';
 
+const complexArray = [
+    [1, 2, [3.1, 3.2, [3.21, 3.22]], 4],
+    [5, [6, [7, [8, 9]]]],
+    [[10, 11], 12, 13]
+];
 
-    const user = {
-        name:'alex',
-        age:25,
+
+const flat = (arr, result = []) => {
+    for(const item of arr) {
+        if(Array.isArray(item)) flat(item, result);
+        else result.push(item);
     }
 
-    const getFullName = function () {
-        return `${this.name} ${this.age}`
-    }
+    return result;
+}
 
-    const apply = function (func, context, ...args) {
-        let result = null;
-        context.func = func;
-        result = context.func(...args);
-        delete context.func;
-
-        return result;
-    }
-
-    const bind = (func= null, context = undefined, args = []) => {
-        if(!func) return undefined;
-
-        return function() {
-            return apply(func, context, ...args)
-        }
-    }
-
-    const bindedGetFullName = bind(getFullName, user);
-    console.log(bindedGetFullName);
-
-
+console.log(
+    flat(complexArray, [0, 0, 0])
+);
