@@ -6,7 +6,6 @@ const complexArray = [
     [[10, 11], 12, 13]
 ];
 
-
 const flat = (arr, result = []) => {
     for(const item of arr) {
         if(Array.isArray(item)) flat(item, result);
@@ -17,5 +16,5 @@ const flat = (arr, result = []) => {
 }
 
 console.log(
-    flat(complexArray, [0, 0, 0])
+    flat(complexArray)
 );
