@@ -1,13 +1,19 @@
 'use strict';
 
-const createAccumulator = () => {
-    let total = 0;
-    return function add(num) {
-        total += num;
-        return total;
-    }
-}
+let ladder = {
+    step: 0,
+    up: function () {
+        this.step++;
+        return this;
+    },
+    down: function () {
+        this.step--;
+        return this;
+    },
+    showStep: function () {
+        alert(this.step);
+        return this;
+    },
+};
+ladder.up().up().down().showStep();
 
-const sum = createAccumulator();
-console.log(sum(6));
-console.log(sum(5));
