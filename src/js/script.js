@@ -1,20 +1,13 @@
 'use strict';
 
-const complexArray = [
-    [1, 2, [3.1, 3.2, [3.21, 3.22]], 4],
-    [5, [6, [7, [8, 9]]]],
-    [[10, 11], 12, 13]
-];
-
-const flat = (arr, result = []) => {
-    for(const item of arr) {
-        if(Array.isArray(item)) flat(item, result);
-        else result.push(item);
+const createAccumulator = () => {
+    let total = 0;
+    return function add(num) {
+        total += num;
+        return total;
     }
-
-    return result;
 }
 
-console.log(
-    flat(complexArray)
-);
+const sum = createAccumulator();
+console.log(sum(6));
+console.log(sum(5));
