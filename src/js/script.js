@@ -10,8 +10,6 @@ const createNestedElement = (tag, text = '', children = []) => {
     });
     return element;
 }
-
-
 function createCounter() {
     let count = 0;
     return function() {
