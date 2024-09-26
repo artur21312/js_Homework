@@ -1,5 +1,7 @@
 'use strict';
-const createNestedElement=(tag, text='', children = [])=> {
+
+
+const createNestedElement = (tag, text = '', children = []) => {
     const element = document.createElement(tag);
     element.textContent = text;
 
@@ -9,116 +11,40 @@ const createNestedElement=(tag, text='', children = [])=> {
     return element;
 }
 
+
+function createCounter() {
+    let count = 0;
+    return function() {
+        count++;
+        return count;
+    }
+}
+const counter = createCounter(); // Создаём один счётчик
+
+const createTDElement=()=> {
+    const value = counter();
+    return createNestedElement('td', value);
+}
+
+const generateMultipleElements=() =>{
+    const elements = [];
+    for (let i = 0; i < 10; i++) {
+        elements.push(createTDElement());
+    }
+    return createNestedElement('tr', '', elements);
+}
+
+
 const nestedStructure = createNestedElement('table', '', [
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
-    createNestedElement('tr', '0', [
-        createNestedElement('td', '1'),
-        createNestedElement('td', '2'),
-        createNestedElement('td', '3'),
-        createNestedElement('td', '4'),
-        createNestedElement('td', '5'),
-        createNestedElement('td', '6'),
-        createNestedElement('td', '7'),
-        createNestedElement('td', '8'),
-        createNestedElement('td', '9'),
-    ]),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements(),
+    generateMultipleElements()
 ]);
 document.body.appendChild(nestedStructure);
