@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 const textInput = document.createElement('input');
 textInput.type = 'text';
 
