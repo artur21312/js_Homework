@@ -8,6 +8,7 @@ const appentHTMLelement=(parentElement=null,elementToAppend=null)=>{
     parentElement.append(elementToAppend);
 }
 
+
 const getRandomNumber = () =>{
     const num =Math.floor(Math.random()*10);
     if(num===0) return 1;
