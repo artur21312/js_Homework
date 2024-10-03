@@ -1,48 +1,37 @@
 'use strict';
 
-
-const createNestedElement = (tag, text = '', children = []) => {
-    const element = document.createElement(tag);
-    element.textContent = text;
-
-    children.forEach(child => {
-        element.appendChild(child);
-    });
-    return element;
-}
-function createCounter() {
-    let count = 0;
-    return function() {
-        count++;
-        return count;
+function createCounter(){
+    let counter=0;
+    return function (){
+     counter++;
+     return counter;
     }
 }
-const counter = createCounter(); // Создаём один счётчик
+const counter = createCounter();
+const parentElement = document.body
 
-const createTDElement=()=> {
-    const value = counter();
-    return createNestedElement('td', value);
+const appentHTMLelement=(parentElement=null,elementToAppend=null)=>{
+    if(!parentElement || !elementToAppend)return;
+    parentElement.append(elementToAppend);
 }
 
-const generateMultipleElements=() =>{
-    const elements = [];
-    for (let i = 0; i < 10; i++) {
-        elements.push(createTDElement());
+const genereteTable =()=>{
+const tableSize=10
+
+    const table=document.createElement('table');
+table.className='table';
+    const tbody=document.createElement('tbody');
+
+    table.append(tbody);
+    for(let i=1;i<=tableSize;i++){
+        const tr=document.createElement("tr");
+        for (let j=1;j<=tableSize;j++){
+            const td=document.createElement("td");
+            td.innerHTML=counter();
+            tr.append(td);
+        }
+        tbody.append(tr);
     }
-    return createNestedElement('tr', '', elements);
+    return table;
 }
-
-
-const nestedStructure = createNestedElement('table', '', [
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements(),
-    generateMultipleElements()
-]);
-document.body.appendChild(nestedStructure);
+appentHTMLelement(parentElement,genereteTable())
