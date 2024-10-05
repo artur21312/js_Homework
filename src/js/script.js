@@ -10,7 +10,6 @@ const sideDiv = document.createElement('div');
 sideDiv.style.display = 'none';
 sideDiv.innerHTML = 'lorem007';
 
-
 div.appendChild(textInput);
 div.appendChild(sideDiv);
 
