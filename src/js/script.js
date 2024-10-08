@@ -1,31 +1,32 @@
 'use strict';
 
-const div = document.createElement('div');
-div.style.display = 'flex';
 
-const textInput = document.createElement('input');
-textInput.type = 'text';
-
-const sideDiv = document.createElement('div');
-sideDiv.style.display = 'none';
-sideDiv.innerHTML = 'lorem007';
-
-div.appendChild(textInput);
-div.appendChild(sideDiv);
-
-document.body.appendChild(div);
-
-const addElement = (parent, childEl) => {
-    parent.appendChild(childEl);
-};
-
-addElement(div, textInput);
-addElement(div, sideDiv);
-
-textInput.addEventListener('focus', () => {
-    sideDiv.style.display = 'block';
+const listItems = document.querySelectorAll('ul li');
+listItems.forEach((item) => {
+    console.log(item.textContent);
 });
 
-textInput.addEventListener('blur', () => {
-    sideDiv.style.display = 'none';
-});
+const ulElement = document.getElementById('ulId');
+const attributeAr=(ulElement)=>{
+const attributesArray = [];
+for (const attr of ulElement.attributes) {
+    attributesArray.push(attr.value);
+}
+console.log(attributesArray);
+}
+attributeAr(ulElement);
+const attributeNamesAr=()=>{
+const attributeNamesArray = [];
+for (const attr of ulElement.attributes) {
+    attributeNamesArray.push(attr.name);
+}
+console.log(attributeNamesArray);
+}
+attributeNamesAr();
+
+listItems[listItems.length - 1].textContent = "Привіт, мене звуть Артур";
+
+listItems[0].setAttribute('data-my-name', 'Артур');
+
+ulElement.removeAttribute('data-dog-tail');
+
