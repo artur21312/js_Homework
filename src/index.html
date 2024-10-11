@@ -3,9 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<script src="js/script.js"></script>
+
+<main>
+    <h1 class="text-center mt-5 mb-5">TODO LIST</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <form data-todo-form>
+                    <div class="mb-3">
+                        <label class="form-label">Task title</label>
+                        <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                placeholder="Title"
+                                required
+                        >
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Task body</label>
+                        <textarea
+                                name="description"
+                                class="form-control"
+                                placeholder="Task body"
+                                cols="30"
+                                rows="10"
+                                required
+                        ></textarea>
+                    </div>
+                    <button
+                            type="submit"
+                            class="btn btn-primary"
+                            disabled
+                    >Create Task!</button>
+                </form>
+            </div>
+
+
+            <div class="col-8">
+                <div class="row" id="todoItems">
+
+                    <!--                    <div class="col-4">-->
+                    <!--                        <div class="taskWrapper">-->
+                    <!--                            <div class="taskHeading">Title</div>-->
+                    <!--                            <div class="taskDescription">Task body</div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script src="./js/script.js.js"></script>
 </body>
 </html>
