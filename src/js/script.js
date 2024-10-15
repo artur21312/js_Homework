@@ -3,6 +3,9 @@
     const todoForm = document.querySelector('[data-todo-form]');
     const todoListContainer = document.querySelector('#todoItems');
 
+
+    let todoList = JSON.parse(localStorage.getItem('todoItems')) || [];
+
     const createTodoCard = ({title, description}) => {
         const card = document.createElement('div');
         card.className = 'col-4';
@@ -14,6 +17,8 @@
         return card;
     }
 
+
+
     const configureFormHandlers = (formElement) => {
         let isSubmitDisabled = true;
         const formFields = {};
@@ -24,7 +29,7 @@
             })
         }
         initializeFields();
-        console.log(formFields);
+
 
         const handleSubmit = (event) => {
             event.preventDefault();
@@ -34,6 +39,10 @@
                 acc[name] = value;
                 return acc;
             }, {});
+
+            todoList.push(formData);
+            localStorage.setItem('todoItems', JSON.stringify(todoList));
+
             const todoCardElement = createTodoCard(formData);
             todoListContainer.prepend(todoCardElement);
             event.target.reset();
@@ -56,7 +65,6 @@
                 submitButton.setAttribute('disabled', '');
             }
         }
-
         return {
             handleInput,
             handleSubmit
@@ -66,4 +74,13 @@
     const {handleSubmit, handleInput} = configureFormHandlers(todoForm);
     todoForm.addEventListener('submit', handleSubmit);
     todoForm.addEventListener('input', handleInput);
+
+    window.addEventListener('DOMContentLoaded', () => {
+        todoList.forEach((todo) => {
+            const todoCardElement = createTodoCard(todo);
+            todoListContainer.prepend(todoCardElement);
+        });
+    });
 })();
+
+
