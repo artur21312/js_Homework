@@ -2,8 +2,6 @@
 (function () {
     const todoForm = document.querySelector('[data-todo-form]');
     const todoListContainer = document.querySelector('#todoItems');
-
-
     let todoList = JSON.parse(localStorage.getItem('todoItems')) || [];
 
     const createTodoCard = ({title, description}) => {
@@ -17,8 +15,6 @@
         return card;
     }
 
-
-
     const configureFormHandlers = (formElement) => {
         let isSubmitDisabled = true;
         const formFields = {};
@@ -29,7 +25,6 @@
             })
         }
         initializeFields();
-
 
         const handleSubmit = (event) => {
             event.preventDefault();
@@ -82,5 +77,3 @@
         });
     });
 })();
-
-
