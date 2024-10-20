@@ -14,7 +14,7 @@
                   <hr>
                   
                 <div > 
-                <button type="button" class="btn btn-danger "><i class="bi bi-trash3-fill"></i></button>
+                <button type="button" class="btn btn-danger "  data-remove-btn><i class="bi bi-trash3-fill" ></i></button>
                 <button type="button" class="btn btn-primary "><i class="bi bi-pen-fill"></i></button>
                 </div>
             </div>`;
@@ -72,9 +72,20 @@
         }
     }
 
-    const removeItemHandler=()=>{
-        console.log('remove item');
+    const removeItemHandler=({target})=>{
+        if (!target.closest('[data-remove-btn]'))return;
+
+
+
+        console.log(target.closest('[data-remove-btn]'));
     }
+
+
+
+
+
+
+
 
     const {handleSubmit, handleInput} = configureFormHandlers(todoForm);
     todoForm.addEventListener('submit', handleSubmit);
