@@ -11,6 +11,12 @@
             <div class="taskWrapper">
                 <div class="taskHeading">${title}</div>
                 <div class="taskDescription">${description}</div>
+                  <hr>
+                  
+                <div > 
+                <button type="button" class="btn btn-danger "><i class="bi bi-trash3-fill"></i></button>
+                <button type="button" class="btn btn-primary "><i class="bi bi-pen-fill"></i></button>
+                </div>
             </div>`;
         return card;
     }
@@ -66,10 +72,14 @@
         }
     }
 
+    const removeItemHandler=()=>{
+        console.log('remove item');
+    }
+
     const {handleSubmit, handleInput} = configureFormHandlers(todoForm);
     todoForm.addEventListener('submit', handleSubmit);
     todoForm.addEventListener('input', handleInput);
-
+    todoListContainer.addEventListener('click',removeItemHandler)
     window.addEventListener('DOMContentLoaded', () => {
         todoList.forEach((todo) => {
             const todoCardElement = createTodoCard(todo);
