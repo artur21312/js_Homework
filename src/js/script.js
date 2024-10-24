@@ -21,7 +21,7 @@ let user={
         if(value>0&&value<120) {
             this._age = value;
         }else {
-        console.log('This age is impossible for a person');
+        console.error('This age is impossible for a person');
         }
     }
 }
