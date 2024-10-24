@@ -1,100 +1,32 @@
 'use strict';
-(function () {
-    const todoForm = document.querySelector('[data-todo-form]');
-    const todoListContainer = document.querySelector('#todoItems');
-    let todoList = JSON.parse(localStorage.getItem('todoItems')) || [];
 
-    const createTodoCard = ({title, description}) => {
-        const card = document.createElement('div');
-        card.className = 'col-4';
-        card.innerHTML = `
-            <div class="taskWrapper">
-                <div class="taskHeading">${title}</div>
-                <div class="taskDescription">${description}</div>
-                  <hr>
-                  
-                <div > 
-                <button type="button" class="btn btn-danger "  data-remove-btn><i class="bi bi-trash3-fill" ></i></button>
-                <button type="button" class="btn btn-primary "><i class="bi bi-pen-fill"></i></button>
-                </div>
-            </div>`;
-        return card;
-    }
-
-    const configureFormHandlers = (formElement) => {
-        let isSubmitDisabled = true;
-        const formFields = {};
-
-        const initializeFields = () => {
-            formElement.querySelectorAll('input, textarea').forEach(({name}) => {
-                formFields[name] = false;
-            })
-        }
-        initializeFields();
-
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            if (isSubmitDisabled) return;
-            const inputs = event.target.querySelectorAll('input, textarea');
-            const formData = Array.from(inputs).reduce((acc, {name, value}) => {
-                acc[name] = value;
-                return acc;
-            }, {});
-
-            todoList.push(formData);
-            localStorage.setItem('todoItems', JSON.stringify(todoList));
-
-            const todoCardElement = createTodoCard(formData);
-            todoListContainer.prepend(todoCardElement);
-            event.target.reset();
-        }
-
-        const handleInput = ({target}) => {
-            const submitButton = formElement.querySelector('button[type=submit]');
-
-            if (target.value.trim().length) {
-                if (!formFields[target.name]) formFields[target.name] = true;
-            } else {
-                if (formFields[target.name]) formFields[target.name] = false;
-            }
-
-            isSubmitDisabled = !Object.values(formFields).every((field) => field);
-
-            if (!isSubmitDisabled) {
-                submitButton.removeAttribute('disabled');
-            } else {
-                submitButton.setAttribute('disabled', '');
+let user = {
+    data: {
+        a: 1,
+        b: 2,
+        c: 3,
+        d: {
+            a1: 1,
+            b1: 2,
+            c1: 3,
+            d1: {
+                a2: 3,
+                b2: 3,
+                c2: 3
             }
         }
-        return {
-            handleInput,
-            handleSubmit
+    }
+};
+
+const deepFreeze = (obj) => {
+    Object.freeze(obj);
+
+    Object.keys(obj).forEach(key => {
+        if (typeof obj[key] === 'object' && obj[key] !== null && !Object.isFrozen(obj[key])) {
+            deepFreeze(obj[key]);
         }
-    }
-
-    const removeItemHandler=({target})=>{
-        if (!target.closest('[data-remove-btn]'))return;
-
-
-
-        console.log(target.closest('[data-remove-btn]'));
-    }
-
-
-
-
-
-
-
-
-    const {handleSubmit, handleInput} = configureFormHandlers(todoForm);
-    todoForm.addEventListener('submit', handleSubmit);
-    todoForm.addEventListener('input', handleInput);
-    todoListContainer.addEventListener('click',removeItemHandler)
-    window.addEventListener('DOMContentLoaded', () => {
-        todoList.forEach((todo) => {
-            const todoCardElement = createTodoCard(todo);
-            todoListContainer.prepend(todoCardElement);
-        });
     });
-})();
+    return obj;
+};
+
+deepFreeze(user);
