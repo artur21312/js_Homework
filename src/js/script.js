@@ -1,70 +1,87 @@
 'use strict';
 
-function makeCounter() {
-    let counter = 0;
-    return function() {
-        counter++;
-        return counter;
-    };
+function Student(firstName, lastName, birthYear) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.birthYear = birthYear;
+    this.age =  Date().getFullYear() - birthYear;
+
+    this.lessonCount = 0; // Переименовано для большей ясности
+    this.grades =  Array(10);
+    this.attendanceRecord =  Array(10);
 }
 
-const Student = function(name, surname, yearOfBirth) {
-    this.name = name;
-    this.surname = surname;
-    this.yearOfBirth = yearOfBirth;
-    this.attendance = new Array(10).fill(null);
-    this.assessments = new Array(10).fill(null);
+Student.prototype._recordAttendance = function(isPresent) {
+    if (typeof isPresent !== 'boolean') throw new Error('Значение attendance должно быть булевым');
+    if (this.lessonCount >= 10) throw new Error('Достигнут лимит занятий');
 
-    this.age = function() {
-        return console.log('age =', 2024 - this.yearOfBirth);
-    };
+    this.attendanceRecord[this.lessonCount] = isPresent;
+    this.lessonCount += 1;
+};
 
-    let visitCounter = makeCounter();
-    let markCounter = makeCounter();
+Student.prototype.markPresent = function() {
+    this._recordAttendance(true);
+};
 
-    this.present = function() {
-        let visitCount = visitCounter();
-        if (visitCount > 10) {
-            console.log('The student visited the maximum number of pairs');
-        } else {
-            this.attendance[visitCount - 1] = true;
+Student.prototype.markAbsent = function() {
+    this._recordAttendance(false);
+};
+
+Student.prototype.setGrade = function(grade) {
+    const minGrade = 0;
+    const maxGrade = 10;
+
+    if (typeof grade !== 'number') throw new Error('Оценка должна быть числом');
+    if (grade < minGrade || grade > maxGrade) throw new Error(`Оценка должна быть в диапазоне от ${minGrade} до ${maxGrade}`);
+
+    const currentLessonIndex = this.lessonCount - 1;
+    if (!this.attendanceRecord[currentLessonIndex]) throw new Error('Нельзя установить оценку за пропущенное занятие');
+
+    this.grades[currentLessonIndex] = grade;
+};
+
+Student.prototype._calculateAverageGrade = function() {
+    if (this.grades.every(grade => typeof grade !== 'number')) {
+        return 'Невозможно рассчитать среднюю оценку из-за отсутствия оценок';
+    }
+
+    const gradeData = this.grades.reduce(
+        (acc, grade) => {
+            if (typeof grade !== 'number') return acc;
+            acc.gradeCount += 1;
+            acc.gradeSum += grade;
+
+            return acc;
+        },
+        {
+            gradeCount: 0,
+            gradeSum: 0,
         }
-    };
+    );
 
-    this.absent = function() {
-        let visitCount = visitCounter();
-        if (visitCount > 10) {
-            console.log('The student visited the maximum number of pairs');
-        } else {
-            this.attendance[visitCount - 1] = false;
-        }
-    };
+    return gradeData.gradeSum / gradeData.gradeCount;
+};
 
-    this.mark = function() {
-        let newAssessment = parseInt(prompt('Введите оценку', ''));
-        let markCount = markCounter();
-        if (markCount > 10) {
-            console.log('You allowed excess of marks');
-        } else if (newAssessment >= 0 && newAssessment <= 10) {
-            this.assessments[markCount - 1] = newAssessment;
-        } else {
-            console.log('This assessment is not possible');
-        }
-    };
+Student.prototype._calculateAverageAttendance = function() {
+    if (typeof this.attendanceRecord[0] !== 'boolean') {
+        return 'Невозможно рассчитать среднюю посещаемость из-за отсутствия данных';
+    }
 
-    this.summary = function() {
-        let totalScore = this.assessments.reduce((acc, curr) => acc + (curr || 0), 0);
-        let averageScore = totalScore / this.assessments.filter(a => a !== null).length || 0;
+    const attendedLessonsCount = this.attendanceRecord.filter(Boolean).length;
+    return attendedLessonsCount / this.lessonCount;
+};
 
-        let totalAttendance = this.attendance.reduce((acc, curr) => acc + (curr ? 1 : 0), 0);
-        let averageAttendance = totalAttendance / this.attendance.filter(a => a !== null).length || 0;
-
-        if (averageScore > 9 && averageAttendance > 0.9) {
-            console.log('Ух ти, який молодчинка!');
-        } else if (averageScore > 9 || averageAttendance > 0.9) {
-            console.log('Нормально, але можна краще');
-        } else {
-            console.log('Редька!');
-        }
+Student.prototype.getSummary = function() {
+    return {
+        averageGrade: Number(this._calculateAverageGrade().toFixed(1)),
+        averageAttendance: Number(this._calculateAverageAttendance().toFixed(1)),
     };
 };
+
+export default Student;
+
+const studentInstance1 = new Student('Pavlo', 'Doe', 2000);
+const studentInstance2 = new Student('Artyr', 'Cooper', 2004);
+
+console.log(studentInstance1);
+console.log(studentInstance2);
