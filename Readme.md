@@ -1,44 +1,34 @@
-Створи систему, яка моделює бібліотеку з друкованими та електронними книгами. Всі книги повинні мати можливість зберігати основну інформацію, але друковані та електронні книги можуть мати додаткові характеристики. Реалізуй доступ до цих характеристик за допомогою геттерів та сеттерів.
+Розшир задачі зі спадкуванням новими функціями та логікою:
 
-Опис класів
-Базовий клас Book
+Загальні вимоги:
+Singleton:
+Клас EmailService повинен бути реалізований як Singleton (тільки один екземпляр може бути створений для базового класу).
+Обмеження преміум email:
+У класі PremiumEmailService встанови обмеження: не більше 5 преміум email. Якщо ліміт перевищено, метод addPremiumEmail повинен кидати помилку.
+Взаємодія між екземплярами:
+Додай клас EnterpriseEmailService, який також успадковує EmailService.
+EnterpriseEmailService повинен мати метод migratePremiumEmails(targetService), який переносить всі преміум email до іншого екземпляра PremiumEmailService.
+Додаткові функції:
+Кожен клас має логіку логування (через захищений метод _log(message)), який додає запис в масив приватної властивості #logs та виводить його в консоль.
+Створи метод getLogs() для отримання всіх записів логів.
+Приклад використання
 
-Властивості:
-title (назва книги)
-author (автор книги)
-year (рік випуску)
-Конструктор:
-Приймає значення для title, author, year і зберігає їх.
-Методи:
-Геттер info: повертає строку "Title: <title>, Author: <author>, Year: <year>".
-Метод getDescription(): повертає строку "This is a book titled '<title>' by <author>.".
-Сеттер year: перевіряє, чи значення року є числом; якщо ні, виводить помилку в консоль.
-Клас-нащадок PrintedBook, який успадковує Book
+Copy code
+const premiumService1 = new PremiumEmailService();
+const premiumService2 = new PremiumEmailService();
+const enterpriseService = new EnterpriseEmailService();
 
-Додаткова властивість:
-pageCount (кількість сторінок)
-Конструктор:
-Приймає всі параметри для Book, а також додатково pageCount.
-Викликає конструктор батьківського класу через super.
-Методи:
-Перевизначення геттера info: повертає строку "Title: <title>, Author: <author>, Year: <year>, Pages: <pageCount>".
-Перевизначення методу getDescription(): використовує super.getDescription() та додає " It has <pageCount> pages.".
-Сеттер pageCount: перевіряє, чи значення pageCount є числом більше за 0; якщо ні, виводить помилку в консоль.
-Клас-нащадок Ebook, який успадковує Book
+premiumService1.addPremiumEmail("vip1@premium.com");
+premiumService1.addPremiumEmail("vip2@premium.com");
 
-Додаткова властивість:
-fileSize (розмір файлу в МБ)
-Конструктор:
-Приймає всі параметри для Book, а також додатково fileSize.
-Викликає конструктор батьківського класу через super.
-Методи:
-Перевизначення геттера info: повертає строку "Title: <title>, Author: <author>, Year: <year>, File Size: <fileSize>MB".
-Перевизначення методу getDescription(): використовує super.getDescription() та додає " File size is <fileSize> MB.".
-Сеттер fileSize: перевіряє, чи значення fileSize є числом більше за 0; якщо ні, виводить помилку в консоль.
-Критерії виконання
+console.log(premiumService1.getPremiumEmails());
+// ["vip1@premium.com", "vip2@premium.com"]
 
-Реалізуй аксесори для властивостей класів year, pageCount, fileSize.
+enterpriseService.addPremiumEmail("enterprise@premium.com");
 
-Використовуй super для звернення до методів батьківського класу.
+enterpriseService.migratePremiumEmails(premiumService2);
 
-Перевизначення методів getInfo та getDescription повинні відповідати описаному формату.
+console.log(premiumService2.getPremiumEmails());
+// ["enterprise@premium.com"]
+
+console.log(premiumService1.getLogs());
