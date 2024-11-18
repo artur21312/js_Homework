@@ -1,65 +1,72 @@
 `use strict`;
 
+class EmailService{
 
-class Book{
-    title=null;
-    author =null;
-    year =null;
+    static email=[];
+#logs=[];
+    constructor(email,#logs){
+        this.email=email;
+        this.#logs=this.#logs;
 
-    constructor(title,author,year){
-        this.title=title;
-        this.author=author;
-        this.year=year;
-
+        post.email.push(this);
     }
-    get info(){
-        console.log(`Title: ${this.title}, Author: ${this.author}, Year: ${this.year}`);
-    }
-    getDescription(){
-        console.log(`This is a book titled ${this.title} by ${this.author}.`)
-    }
-    set year(year){
-        if (typeof year!=='number') console.error('Year does not equal number ');
 
+    _log(message){
+    this.#logs.push(message);
+    console.log(this.#logs);
+    }
 
+    getLogs(){
+        return this.#logs;
     }
 }
 
-class PrintedBook extends Book{
-    pageCount = null;
-    fileSize=null;
-    constructor( { name,author , year,pageCount,fileSize} ) {
-        super(name,
-            author,
-            year);
-        this.pageCount=pageCount;
-        this.fileSize=fileSize;
-    }
-    get  info(){
-        super.info();
-        console.log(`File Size: ${this.fileSize} MB`);
-    }
-    getDescription(){
-        super.getDescription();
-        console.log(`File size is ${this.fileSize} MB.`);
+class PremiumEmailService extends EmailService{
+    #premiumEmails = [];
+
+    constructor() {
+        super();
     }
 
-    set fileSize(fileSize){
-        if (typeof fileSize !== 'number' || fileSize < 0) {
-            console.warn('Cannot set such fileSize as age');
-        }
+    addPremiumEmail(email){
+    if (email.length===6)console.error('The premium client base is full');
+        this.#premiumEmails.push(email);
+        this._log(`Added premium email: ${email}`);
     }
-
+    getPremiumEmails() {
+        return this.#premiumEmails;
+    }
 
 }
 
-const myBook = new PrintedBook({
-    name: "War and Peace",
-    author: "Leo Tolstoy",
-    year: 1869,
-    pageCount: 1225,
-    fileSize: 2.5
-});
+class EnterpriseEmailService extends EmailService{
 
-myBook.info();
-myBook.getDescription();
+    constructor() {
+        super();
+    }
+
+
+    migratePremiumEmails(targetService){
+    PremiumEmailService.email.push(targetService);
+    }
+
+}
+
+const premiumService1 = new PremiumEmailService();
+const premiumService2 = new PremiumEmailService();
+const enterpriseService = new EnterpriseEmailService();
+
+premiumService1.addPremiumEmail("vip1@premium.com");
+premiumService1.addPremiumEmail("vip2@premium.com");
+
+console.log(premiumService1.getPremiumEmails());
+// ["vip1@premium.com", "vip2@premium.com"]
+
+enterpriseService.addPremiumEmail("enterprise@premium.com");
+
+enterpriseService.migratePremiumEmails(premiumService2);
+
+console.log(premiumService2.getPremiumEmails());
+// ["enterprise@premium.com"]
+
+console.log(premiumService1.getLogs());
