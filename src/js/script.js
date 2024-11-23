@@ -1,72 +1,47 @@
-`use strict`;
 
-class EmailService{
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-    static email=[];
-#logs=[];
-    constructor(email,#logs){
-        this.email=email;
-        this.#logs=this.#logs;
-
-        post.email.push(this);
+class TaskQueue {
+     queue=1000;
+     number= 0;
+    task=[];
+    constructor(queue,number,task) {
+        this.queue = queue;
+        this.number = number;
+        this.task=task;
     }
 
-    _log(message){
-    this.#logs.push(message);
-    console.log(this.#logs);
+
+
+    addTask(task: () => Promise<string>){
+
+ this.task.push(task);
     }
 
-    getLogs(){
-        return this.#logs;
+
+
+    async run(): Promise<string> {
+        if(!this.isRunning){
+        for (const task of this.tasks) {
+            const result = await task();
+            console.log(result);
+            await delay(this.queueDelay);
+        }
+        console.log("Усі завдання завершено");
+    }else console.log('операція виконується');
+
     }
 }
 
-class PremiumEmailService extends EmailService{
-    #premiumEmails = [];
+const queue = new TaskQueue(1000); // затримка між завданнями — 1 секунда
 
-    constructor() {
-        super();
-    }
+queue.addTask(() => Promise.resolve("Task 1 виконано"));
+queue.addTask(() => Promise.resolve("Task 2 виконано"));
+queue.addTask(() => Promise.resolve("Task 3 виконано"));
 
-    addPremiumEmail(email){
-    if (email.length===6)console.error('The premium client base is full');
-        this.#premiumEmails.push(email);
-        this._log(`Added premium email: ${email}`);
-    }
-    getPremiumEmails() {
-        return this.#premiumEmails;
-    }
+queue.run().then((message) => {
+    console.log(message); // Усі завдання завершено
+});
 
-}
-
-class EnterpriseEmailService extends EmailService{
-
-    constructor() {
-        super();
-    }
-
-
-    migratePremiumEmails(targetService){
-    PremiumEmailService.email.push(targetService);
-    }
-
-}
-
-const premiumService1 = new PremiumEmailService();
-const premiumService2 = new PremiumEmailService();
-const enterpriseService = new EnterpriseEmailService();
-
-premiumService1.addPremiumEmail("vip1@premium.com");
-premiumService1.addPremiumEmail("vip2@premium.com");
-
-console.log(premiumService1.getPremiumEmails());
-// ["vip1@premium.com", "vip2@premium.com"]
-
-enterpriseService.addPremiumEmail("enterprise@premium.com");
-
-enterpriseService.migratePremiumEmails(premiumService2);
-
-console.log(premiumService2.getPremiumEmails());
-// ["enterprise@premium.com"]
-
-console.log(premiumService1.getLogs());

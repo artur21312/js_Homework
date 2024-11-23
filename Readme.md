@@ -1,34 +1,44 @@
-Розшир задачі зі спадкуванням новими функціями та логікою:
+Реалізувати просту чергу завдань, яка виконує функції з затримкою, використовуючи Promise.
 
-Загальні вимоги:
-Singleton:
-Клас EmailService повинен бути реалізований як Singleton (тільки один екземпляр може бути створений для базового класу).
-Обмеження преміум email:
-У класі PremiumEmailService встанови обмеження: не більше 5 преміум email. Якщо ліміт перевищено, метод addPremiumEmail повинен кидати помилку.
-Взаємодія між екземплярами:
-Додай клас EnterpriseEmailService, який також успадковує EmailService.
-EnterpriseEmailService повинен мати метод migratePremiumEmails(targetService), який переносить всі преміум email до іншого екземпляра PremiumEmailService.
-Додаткові функції:
-Кожен клас має логіку логування (через захищений метод _log(message)), який додає запис в масив приватної властивості #logs та виводить його в консоль.
-Створи метод getLogs() для отримання всіх записів логів.
-Приклад використання
 
+Опис:
+Створіть клас TaskQueue, який працює з чергою завдань.
+Черга повинна виконувати завдання послідовно з фіксованою затримкою між ними.
+Завдання — це функції, які повертають повідомлення у вигляді тексту (наприклад, "Task 1 виконано").
+Затримка між виконанням завдань має бути задана під час створення черги.
+Коли всі завдання виконані, черга повинна повернути повідомлення "Усі завдання завершено".
+Приклад використання:
 Copy code
-const premiumService1 = new PremiumEmailService();
-const premiumService2 = new PremiumEmailService();
-const enterpriseService = new EnterpriseEmailService();
+const queue = new TaskQueue(1000); // затримка між завданнями — 1 секунда
 
-premiumService1.addPremiumEmail("vip1@premium.com");
-premiumService1.addPremiumEmail("vip2@premium.com");
+queue.addTask(() => Promise.resolve("Task 1 виконано"));
+queue.addTask(() => Promise.resolve("Task 2 виконано"));
+queue.addTask(() => Promise.resolve("Task 3 виконано"));
 
-console.log(premiumService1.getPremiumEmails());
-// ["vip1@premium.com", "vip2@premium.com"]
+queue.run().then((message) => {
+console.log(message); // Усі завдання завершено
+});
 
-enterpriseService.addPremiumEmail("enterprise@premium.com");
+Вимоги до реалізації:
+Методи класу:
+addTask(task: () => Promise<string>) — додає нове завдання до черги.
+run(): Promise<string> — виконує всі завдання з заданою затримкою.
+Використовуйте тільки Promise, не використовуйте async/await.
+Для створення затримки використовуйте власну функцію delay(ms: number):
+Copy code
+function delay(ms) {
+return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-enterpriseService.migratePremiumEmails(premiumService2);
+Додаткові вимоги (необов'язково):
+Реалізуйте перевірку, щоб не можна було викликати run(), якщо черга вже виконується.
+Якщо під час виконання завдання виникла помилка, вивести її в консоль, але продовжити виконання інших завдань.
 
-console.log(premiumService2.getPremiumEmails());
-// ["enterprise@premium.com"]
+Очікуваний результат:
+Виконання завдань має виглядати так:
 
-console.log(premiumService1.getLogs());
+"Task 1 виконано" (через 1 секунду)
+"Task 2 виконано" (ще через 1 секунду)
+"Task 3 виконано" (ще через 1 секунду)
+"Усі завдання завершено"
+Домашку можна здати після терміну
