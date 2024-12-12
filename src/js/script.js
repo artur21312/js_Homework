@@ -1,84 +1,32 @@
 'use strict';
 
-const form = document.getElementById('search-form');
-const errorMessage = document.getElementById('error-message');
-const postContainer = document.getElementById('post-container');
-const commentsContainer = document.getElementById('comments-container');
+$(document).ready(function() {
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const postId = document.getElementById('post-id').value;
+    var city = 'LVIV';
+    var apiKey = '5d066958a60d315387d9492393935c19';
+    var url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`;
 
-    errorMessage.textContent = '';
-    postContainer.innerHTML = '';
-    commentsContainer.innerHTML = '';
+    // Виконуємо AJAX-запит
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+
+            $('#city-name').text('Місто: ' + data.name);
+            $('#temperature').text('Температура: ' + data.main.temp + ' °C');
+            $('#pressure').text('Тиск: ' + data.main.pressure + ' hPa');
+            $('#humidity').text('Вологість: ' + data.main.humidity + ' %');
+            $('#description').text('Опис: ' + data.weather[0].description);
+            $('#wind-speed').text('Швидкість вітру: ' + data.wind.speed + ' м/с');
+            $('#wind-direction').text('Напрям вітру: ' + data.wind.deg + '°');
 
 
-    if (postId < 1 || postId > 100) {
-        errorMessage.textContent = 'ID має бути в межах від 1 до 100.';
-        return;
-    }
-
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Пост не знайдено');
-            }
-            return response.json();
-        })
-        .then(post => {
-            displayPost(post);
-        })
-        .catch(error => {
-            errorMessage.textContent = error.message;
-        });
+            var iconUrl = 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png';
+            $('#weather-icon').attr('src', iconUrl);
+        },
+        error: function() {
+            alert('Не вдалося отримати дані');
+        }
+    });
 });
-
-function displayPost(post) {
-    postContainer.innerHTML = `
-        <h2>Пост №${post.id}</h2>
-        <p><strong>Заголовок:</strong> ${post.title}</p>
-        <p>${post.body}</p>
-        <button id="load-comments">Показати коментарі</button>
-    `;
-
-    const loadCommentsButton = document.getElementById('load-comments');
-    loadCommentsButton.addEventListener('click', () => loadComments(post.id));
-}
-
-function loadComments(postId) {
-    commentsContainer.innerHTML = '<p>Завантаження коментарів...</p>';
-
-    fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Не вдалося завантажити коментарі');
-            }
-            return response.json();
-        })
-        .then(comments => {
-            displayComments(comments);
-        })
-        .catch(error => {
-            commentsContainer.innerHTML = `<p class="error">${error.message}</p>`;
-        });
-}
-
-function displayComments(comments) {
-    if (comments.length === 0) {
-        commentsContainer.innerHTML = '<p>Коментарі відсутні.</p>';
-        return;
-    }
-
-    const commentsHtml = comments.map(comment => `
-        <div>
-            <h4>${comment.name} (${comment.email})</h4>
-            <p>${comment.body}</p>
-        </div>
-    `).join('');
-
-    commentsContainer.innerHTML = `
-        <h3>Коментарі:</h3>
-        ${commentsHtml}
-    `;
-}
