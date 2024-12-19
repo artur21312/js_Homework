@@ -1,35 +1,17 @@
 {
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "prettier": "^3.3.3"
-  },
-  "name": "hvr",
+  "name": "js_homework",
   "version": "1.0.0",
-  "description": "",
+  "description": "За допомогою ajax-запиту вивести погоду",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/js/script.js",
-    "test": "test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/artur21312/js_Homework.git"
-  },
-  "keywords": [
-    "hello"
-  ],
-  "author": "artur",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/artur21312/js_Homework/issues"
-  },
-  "homepage": "https://github.com/artur21312/js_Homework#readme",
-  "devDependencies": {
-    "eslint": "^9.9.0",
-    "eslint-plugin-vue": "^9.27.0",
-    "globals": "^15.9.0",
-    "jest": "^29.7.0",
-    "typescript-eslint": "^8.1.0"
-  },
-
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
 }
