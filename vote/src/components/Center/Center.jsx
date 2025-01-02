@@ -13,6 +13,7 @@ export class Center extends Component {
     }
 
 
+
     handleVote = (index) => {
         const newVotes = [...this.state.votes];
         newVotes[index] += 1;
