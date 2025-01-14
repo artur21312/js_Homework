@@ -1,11 +1,108 @@
-.App {
+
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  background-color: #121212;
+  color: #FFD700;
 }
 
-.main-container {
+
+.App-header {
+  background-color: #1c1c1c;
+  padding: 20px;
+  text-align: center;
+}
+
+.App-title {
+  font-size: 2.5em;
+  color: #FF4500;
+  margin: 0;
+}
+
+
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: left;
+}
+
+.todo {
+  background-color: #1c1c1c;
+  color: #FFD700;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #FF4500;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.todo:hover {
+  transform: scale(1.05);
+  background-color: #292929; /* Чуть светлее при наведении */
+}
+
+form {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.input {
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  border: 2px solid #FFD700;
+  border-radius: 5px;
+  background-color: #1c1c1c;
+  color: #FFD700;
+}
+
+.input::placeholder {
+  color: #FF6347;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #FF4500;
+}
+
+button {
+  background-color: #FF4500;
+  color: #121212;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #FFD700;
+  color: #121212;
+  transform: scale(1.1);
+}
+
+.done{
+  text-decoration: line-through;
+}
+
+.delete-icon{
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.info{
+  color: #FFD700;
   display: flex;
-  flex: 1;
+  justify-content: space-between;
+  border:2px solid #1c1c1c;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
 }
