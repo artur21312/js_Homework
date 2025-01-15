@@ -60,7 +60,7 @@ function App() {
                         >
                             {todo.text}
                             <img
-                                src={"../public/trash.png"}
+                                src="/trash.png"
                                 alt="delete"
                                 className="delete-icon"
                                 onClick={(e) => {
@@ -68,6 +68,7 @@ function App() {
                                     removeTodo(todo.id);
                                 }}
                             />
+
                         </li>
                     ))}
                 </ul>
