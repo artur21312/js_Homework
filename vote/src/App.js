@@ -1,84 +1,119 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { useState } from "react";
-import Form from './components/form/Form';
 
-function App() {
-    const [todos, setTodos] = useState([]);
-    const [total, setTotal] = useState(0);
-    const [allComplete, setAllComplete] = useState(0);
+const ContactsApp = () => {
+    const [contacts, setContacts] = useState([]);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [newContact, setNewContact] = useState({ name: '', username: '', phone: '' });
 
-    const putTodo = (value) => {
-        if (value) {
-            setTodos([...todos, { id: Date.now(), text: value, done: false }]);
-            setTotal(total + 1);
-        } else {
-            alert("Введите данные");
-        }
-    };
-
-    const toggleTodo = (id) => {
-        setTodos(
-            todos.map((todo) => {
-                if (todo.id !== id) return todo;
-
-                const updatedTodo = { ...todo, done: !todo.done };
-
-
-                setAllComplete(
-                    todos.filter((t) => t.done).length + (updatedTodo.done ? 1 : -1)
-                );
-
-                return updatedTodo;
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then((response) => response.json())
+            .then((data) => {
+                setContacts(data.map(({ id, name, username, phone }) => ({ id, name, username, phone })));
             })
-        );
+            .catch((error) => console.error('Error fetching contacts:', error));
+    }, []);
+
+    const handleDelete = (id) => {
+        setContacts(contacts.filter((contact) => contact.id !== id));
     };
 
-    const removeTodo = (id) => {
-        const todoToRemove = todos.find((todo) => todo.id === id);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewContact({ ...newContact, [name]: value });
+    };
 
-        if (todoToRemove) {
-            setTodos(todos.filter((todo) => todo.id !== id));
-            setTotal(total - 1);
+    const handleSave = () => {
+        const id = Date.now();
+        setContacts([...contacts, { id, ...newContact }]);
+        setNewContact({ name: '', username: '', phone: '' });
+        setIsFormVisible(false);
+    };
 
-            if (todoToRemove.done) {
-                setAllComplete(allComplete - 1);
-            }
-        }
+    const handleCancel = () => {
+        setNewContact({ name: '', username: '', phone: '' });
+        setIsFormVisible(false);
     };
 
     return (
-        <div className="App">
-            <div className="App-header">
-                <h1 className="App-title">Todolist</h1>
-                <Form putTodo={putTodo} />
-                <ul className="todo-list">
-                    {todos.map((todo) => (
-                        <li
-                            className={todo.done ? "todo done" : "todo"}
-                            key={todo.id}
-                            onClick={() => toggleTodo(todo.id)}
-                        >
-                            {todo.text}
-                            <img
-                                src="/trash.png"
-                                alt="delete"
-                                className="delete-icon"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeTodo(todo.id);
-                                }}
-                            />
+        <div className="app-container">
+            <h1 className="app-title">Contacts</h1>
+            <table className="contacts-table">
+                <thead>
+                <tr>
+                    <th>Ім'я</th>
+                    <th>Прізвище</th>
+                    <th>Телефон</th>
+                    <th>Дії</th>
+                </tr>
+                </thead>
+                <tbody>
+                {contacts.map((contact) => (
+                    <tr key={contact.id}>
+                        <td>{contact.name}</td>
+                        <td>{contact.username}</td>
+                        <td>{contact.phone}</td>
+                        <td>
+                            <button className="delete-button" onClick={() => handleDelete(contact.id)}>
+                                Видалити
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
 
-                        </li>
-                    ))}
-                </ul>
-                <div className="info">
-                    <span>All todos: {total}</span>
-                    <span>Completed: {allComplete}</span>
+            {!isFormVisible && (
+                <button className="add-button" onClick={() => setIsFormVisible(true)}>
+                    Додати контакт
+                </button>
+            )}
+
+            {isFormVisible && (
+                <div className="form-container">
+                    <h2 className="form-title">Додати новий контакт</h2>
+                    <form onSubmit={(e) => e.preventDefault()} className="contact-form">
+                        <div className="form-group">
+                            <label>Ім'я:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={newContact.name}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Прізвище:</label>
+                            <input
+                                type="text"
+                                name="username"
+                                value={newContact.username}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Телефон:</label>
+                            <input
+                                type="text"
+                                name="phone"
+                                value={newContact.phone}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-actions">
+                            <button className="save-button" type="button" onClick={handleSave}>
+                                Зберегти
+                            </button>
+                            <button className="cancel-button" type="button" onClick={handleCancel}>
+                                Скасувати
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            )}
         </div>
     );
-}
+};
 
-export default App;
+export default ContactsApp;
